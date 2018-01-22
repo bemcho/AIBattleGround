@@ -461,6 +461,7 @@ void Intro::SpawnDrone() {
 
     Node *boxNode = scene_->CreateChild("MQ9");
     boxNode->SetPosition(cameraNode_->GetPosition());
+    boxNode->SetRotation(cameraNode_->GetRotation());
     boxNode->SetScale(3);
 
     auto *boxObject = boxNode->CreateComponent<StaticModel>();
