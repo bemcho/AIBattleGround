@@ -464,6 +464,9 @@ void Intro::SpawnDrone() {
     boxNode->SetRotation(cameraNode_->GetRotation());
     boxNode->SetScale(3);
 
+    rttCameraNode_->SetRotation(boxNode->GetRotation());
+    rttCameraNode_->LookAt(Vector3(0.0f, 0.0f, 0.0f), Vector3::DOWN, TransformSpace::TS_WORLD);
+
     auto *boxObject = boxNode->CreateComponent<StaticModel>();
     boxObject->SetModel(cache->GetResource<Model>("Models/MQ_9/MQ_9.mdl"));
     boxObject->SetMaterial(cache->GetResource<Material>("Materials/Mutant/Materials/mutant_M.xml"));

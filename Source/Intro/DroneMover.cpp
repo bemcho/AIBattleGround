@@ -25,48 +25,41 @@
 #include <Urho3D/Scene/Scene.h>
 
 #include "DroneMover.h"
-
 DroneMover::DroneMover(Context *context) :
-  LogicComponent(context),
-  moveSpeed_(0.0f),
-  rotationSpeed_(0.0f) {
-    // Only the scene update event is needed: unsubscribe from the rest for optimization
-    SetUpdateEventMask(USE_UPDATE);
+    LogicComponent(context),
+    moveSpeed_(0.0f),
+    rotationSpeed_(0.0f) {
+  // Only the scene update event is needed: unsubscribe from the rest for optimization
+  SetUpdateEventMask(USE_UPDATE);
 }
 
 void DroneMover::SetParameters(float moveSpeed, float rotationSpeed, const BoundingBox &bounds, Node *camera) {
-    moveSpeed_ = moveSpeed;
-    rotationSpeed_ = rotationSpeed;
-    bounds_ = bounds;
-    camera_ = camera;
+  moveSpeed_ = moveSpeed;
+  rotationSpeed_ = rotationSpeed;
+  bounds_ = bounds;
+  camera_ = camera;
 }
 
 void DroneMover::Update(float timeStep) {
-    node_->Translate(Vector3::FORWARD*moveSpeed_*timeStep);
+  const Vector3 camPos(0.0f, -15.0f, 0.0f);
+  node_->Translate(Vector3::FORWARD * moveSpeed_ * timeStep);
 
-    Vector3 pos = node_->GetPosition();
-    node_->SetPosition(Vector3(pos.x_, 200.0f, pos.z_));
-//    if (pos.y_ < 400.f) {
-//        node_->SetPosition(Vector3(pos.x_, pos.y_ + 0.5f, pos.z_));
-//    } else {
-//        node_->SetPosition(Vector3(pos.x_, 400.0f, pos.z_));
-//    }
-    // If in risk of going outside the plane, rotate the model right
-    if (pos.x_ < bounds_.min_.x_
+  Vector3 pos = node_->GetPosition();
+  node_->SetPosition(Vector3(pos.x_, 300.0f, pos.z_));
+  // If in risk of going outside the plane, rotate the model right
+  if (pos.x_ < bounds_.min_.x_
       || pos.x_ > bounds_.max_.x_
       || pos.z_ < bounds_.min_.z_
       || pos.z_ > bounds_.max_.z_) {
-        node_->Yaw(rotationSpeed_*timeStep);
-    }
+    node_->Yaw(rotationSpeed_ * timeStep);
+  }
 
-    camera_->SetPosition(node_->GetPosition());
-    camera_->SetRotation(node_->GetRotation().Inverse());
-    camera_->LookAt(Vector3(0.0f, 0.0f, 0.0f), Vector3::DOWN, TransformSpace::TS_WORLD);
-    // Get the model's first (only) animation state and advance its time. Note the convenience accessor to other components
-    // in the same scene node
-    auto *model = node_->GetComponent<AnimatedModel>(true);
-    if (model && model->GetNumAnimationStates()) {
-        AnimationState *state = model->GetAnimationStates()[0];
-        state->AddTime(timeStep);
-    }
+  camera_->SetPosition(node_->GetPosition() + camPos);
+  // Get the model's first (only) animation state and advance its time. Note the convenience accessor to other components
+  // in the same scene node
+  auto *model = node_->GetComponent<AnimatedModel>(true);
+  if (model && model->GetNumAnimationStates()) {
+    AnimationState *state = model->GetAnimationStates()[0];
+    state->AddTime(timeStep);
+  }
 }
