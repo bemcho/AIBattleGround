@@ -497,7 +497,7 @@ void Intro::CreateInstructions() {
     instructionText_ = ui->GetRoot()->CreateChild<Text>();
     instructionText_->SetText(
       "Use WASD keys to move, RMB to rotate view\n"
-        "LMB to spawn ball object, SHIFT+LMB to spawn a MQ9 Reaper drone\n"
+        "LMB to spawn ball object, MMB to spawn a MQ9 Reaper drone\n"
         "RMB to go back and face the drone control display\n"
         "F5 to save scene, F7 to load\n"
         "F12 to toggle this instruction text"

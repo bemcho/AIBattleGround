@@ -32,7 +32,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY  "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 #    message("Can not find Urho3D lib and includes!")
 #endif()
 # Include Urho3D Cmake common module
-set(URHO3D_HOME /usr/local/lib/Urho3D)
+set(URHO3D_HOME /home/bemcho/.urho3d/install/linux-clang)
 include (UrhoCommon)
 # Define target name
 set (TARGET_NAME AIBattleGround)

@@ -280,8 +280,7 @@ void AIBattleGround::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventDa
             // Texture quality
         else if (key == '1')
         {
-            int quality = renderer->GetTextureQuality();
-            ++quality;
+            MaterialQuality quality = renderer->GetTextureQuality();
             if (quality > QUALITY_HIGH)
                 quality = QUALITY_LOW;
             renderer->SetTextureQuality(quality);
@@ -290,8 +289,7 @@ void AIBattleGround::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventDa
             // Material quality
         else if (key == '2')
         {
-            int quality = renderer->GetMaterialQuality();
-            ++quality;
+            MaterialQuality quality = renderer->GetMaterialQuality();
             if (quality > QUALITY_HIGH)
                 quality = QUALITY_LOW;
             renderer->SetMaterialQuality(quality);
